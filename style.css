@@ -1,0 +1,102 @@
+html{
+    box-sizing: border-box;
+}
+*,*::before,*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+body{
+    font-family: sans-serif;
+}
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  font-size: 16px;
+}
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: none;
+  outline: #000 dotted 2px;
+  outline-offset: .05em;
+}
+button{
+    all: unset;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+button.genera-url:hover{
+    background-color: hsl(0deg 0% 10%);
+}
+button.btn-copy:hover{
+    background-color: hsl(120deg 51% 54%);
+}
+label{
+    display: block;
+}
+input,textarea{
+    padding: .5rem;
+    border: 1px solid gray;
+    width: 100%;
+}
+.btn{
+    padding: 1rem 2rem;
+    border: 1px solid gray;
+    cursor: pointer;
+    background-color: #000;
+    color: white;
+}
+.box-copy{
+    display: flex;
+}
+.btn-copy,.copiar-pila{
+    background-color: rgb(54, 168, 54);
+    margin: 0;
+}
+.btn-reset{
+    background-color: gray;
+}
+.box-button{
+    text-align: center;
+}
+.box-textarea button{
+    display: inline-block;
+}
+.box-select{
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    gap: .2rem;
+}
+.campania,.pieza,.nombre-pieza{
+    width: 100%;
+}
+
+.form{
+    width: 60vw;
+    max-width: 900px;
+    margin: 2rem auto;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.flow > * + *{
+    margin-top: 1.5rem;
+}
+
+@media (max-width:720px) {
+    .grid{
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width:720px) {
+    .form{
+        width: 90vw;
+    }
+}

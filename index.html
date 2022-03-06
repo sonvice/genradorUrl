@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <form class="form flow" id="form">
+            <h2>Generar URL Manualmente</h2>
+            <div class="grid">
+
+                <div class="box-fecha">
+                    <label for="" class="label-time">Año</label>
+                    <input type="number" required placeholder="2022" class="anio" id="anio">
+                    <p><small>Carpeta del año</small></p>
+                </div>
+                <div class="box-fecha">
+                    <label for="" class="label-time">Mes</label>
+                    <input type="text" required placeholder="01-enero" class="mes" id="mes">
+                    <p><small>Ver server de como esta nombrada la carpeta del mes</small></p>
+                </div>
+            </div>
+            <div class="box-campania">
+                <label for="">Campaña o Modelo De Coche</label>
+                <input type="text" required placeholder="lion-days-transversal" class="campania" id="campania">
+                <p><small>Nombre de la carpeta dentro de mes</small></p>
+            </div>
+            <div class="box-campania">
+                <label for="">Tamaño del Formato | Nombre de la pieza o carpeta contenedora</label>
+                <div class="box-select">
+
+                    <select id="select">
+                        
+                        <option value="300x250" selected>300x250</option>
+                        <option value="120x600">120x600</option>
+                        <option value="160x600">160x600</option>
+                        <option value="300x600">300x600</option>
+                        <option value="970x250">970x250</option>
+                        <option value="980x250">980x250</option>
+                        <option value="990x250">990x250</option>
+                        <option value="728x90">728x90</option>
+                        <option value="970x90">970x90</option>
+                        <option value="980x90">980x90</option>
+                        <option value="990x90">990x90</option>
+                    </select>
+                    <input type="text" required placeholder="-lion-days-transversal" class="nombre-pieza" id="nombre-pieza">
+                </div>
+                <p><small>Generalmente es el mismo nombre de la campaña, pero se antepone el tamaño de la pieza</small></p>
+            </div>
+            <div class="box-button">
+
+                <button class="btn btn-reset" id="reset">Reset</button>
+                <button class="btn genera-url" id="get-url">Generar URL</button>
+                
+            </div>
+            <div class="box-copy">
+                <input type="text" id="input-copy" value="">
+                <button class="btn btn-copy" id="btn-copy">
+                    Copiar
+                </button>
+            </div>
+            <div class="box-textarea">
+                <h2>Generar Pila Básica De Formatos</h2>
+                <textarea name="textarea" rows="10" cols="50"></textarea>
+                <div class="box-button">
+                    <button class="btn genera-url" id="urls">Generar Pila Básica</button>
+                    <button class="btn copiar-pila" id="copiar-pila">Copiar Pila</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
