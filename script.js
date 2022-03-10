@@ -61,4 +61,30 @@ function generarPila(url) {
     console.log(indexFormato)
 }
 
+//Validar y limpiar URL
+const formClear = document.getElementById('form-clear-url');
+const inputClear = document.getElementById('input-clear');
+const textAreaUrl = document.getElementById('textarea-url');
+function limpiarUrl(e) {
+    e.preventDefault();
+    let urlClearValue = inputClear.value;
+    let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
+    textAreaUrl.value = urlReplace
+    console.log(urlReplace)
+    let expresion = /\b\d\d\d\w\d\d\d\b/g;
+    let encontrado = urlReplace.replace(expresion, '970x250');
+    console.log(encontrado)
 
+
+}
+
+formClear.addEventListener('submit', limpiarUrl);
+
+//Selecionar List Check
+const listCheck = document.querySelectorAll('.content-check input');
+
+listCheck.forEach((check) => {
+    check.addEventListener('change', (e) => {
+        console.log(e)
+    })
+})

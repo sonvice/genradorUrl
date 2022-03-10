@@ -87,7 +87,19 @@ input,textarea{
     gap: 1rem;
 }
 .flow > * + *{
-    margin-top: 1.5rem;
+    margin-top: var(--margint-top,1.8em);
+}
+
+/* Check */
+.content-check input{
+    width: initial;
+}
+.content-check-list{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.check-list{
+    --margint-top:.5em;
 }
 
 @media (max-width:720px) {

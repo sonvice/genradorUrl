@@ -63,12 +63,69 @@
                     Copiar
                 </button>
             </div>
+        </form>
+        <hr>
+        <!-- Validar y limpiar url -->
+        <form class="form flow" id="form-clear-url">
+            <div class="box-copy">
+                <input type="text" required id="input-clear" value="">
+                <button class="btn btn-copy" id="btn-clear">
+                    Clear
+                </button>
+            </div>
+            
+                <div class="content-check-list">
+                    <div class="box-check-vertical check-list flow">
+                        <div class="content-check">
+                            <label><input type="checkbox" id="120x600" value="120x600"> 120x600</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="160x600" value="160x600"> 160x600</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="250x250" value="250x250"> 250x250</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="300x250" value="300x250"> 300x250</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="320x480" value="320x480"> 320x480</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="300x600" value="300x600"> 300x600</label>
+                        </div>
+                    </div>
+                    <div class="box-check-horizontal flow check-list">
+    
+                        <div class="content-check">
+                            <label><input type="checkbox" id="728x90" value="728x90"> 728x90</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="970x250" value="970x250"> 970x250</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="980x250" value="980x250"> 980x250</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="990x250" value="990x250"> 990x250</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="970x90" value="970x90"> 970x90</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="980x90" value="980x90"> 980x90</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" id="990x90" value="990x90"> 990x90</label>
+                        </div>
+                    </div>
+                </div>
             <div class="box-textarea">
                 <h2>Generar Pila Básica De Formatos</h2>
-                <textarea name="textarea" rows="10" cols="50"></textarea>
+                <textarea name="textarea" rows="10" cols="50" id="textarea-url"></textarea>
                 <div class="box-button">
-                    <button class="btn genera-url" id="urls">Generar Pila Básica</button>
-                    <button class="btn copiar-pila" id="copiar-pila">Copiar Pila</button>
+                    <button class="btn genera-url" id="genrate-url">Generar Pila Básica</button>
+                    <button class="btn copy-pila" id="copy-pila">Copiar Pila</button>
                 </div>
             </div>
         </form>
