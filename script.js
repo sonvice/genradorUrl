@@ -65,26 +65,53 @@ function generarPila(url) {
 const formClear = document.getElementById('form-clear-url');
 const inputClear = document.getElementById('input-clear');
 const textAreaUrl = document.getElementById('textarea-url');
-function limpiarUrl(e) {
-    e.preventDefault();
+//Limpiar url
+function limpiarUrl(formato) {
     let urlClearValue = inputClear.value;
     let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
-    textAreaUrl.value = urlReplace
-    console.log(urlReplace)
+    // textAreaUrl.value = urlReplace
+    // console.log(urlReplace)
     let expresion = /\b\d\d\d\w\d\d\d\b/g;
-    let encontrado = urlReplace.replace(expresion, '970x250');
-    console.log(encontrado)
+    let nuevaUrl = urlReplace.replace(expresion, formato);
+    textAreaUrl.value += `${nuevaUrl}`
+    console.log(nuevaUrl)
+}
 
+
+function preventForm(e) {
+    e.preventDefault();
 
 }
 
-formClear.addEventListener('submit', limpiarUrl);
+formClear.addEventListener('submit', preventForm);
+
+//For de list Format
+let arrFormat = ['300x250', '300x250'];
+
+
+
 
 //Selecionar List Check
 const listCheck = document.querySelectorAll('.content-check input');
 
 listCheck.forEach((check) => {
     check.addEventListener('change', (e) => {
-        console.log(e)
+
+        for (let i = 0; i < arrFormat.length; i++) {
+
+            // console.log(arrFormat)
+        }
+
+        if (e.target.checked === true) {
+            let formatoCheck = e.target.value
+            limpiarUrl(formatoCheck)
+            arrFormat.push(e.target.value)
+            // console.log(arrFormat)
+        } else {
+
+        }
+
+
     })
 })
+

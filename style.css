@@ -97,9 +97,15 @@ input,textarea{
 .content-check-list{
     display: grid;
     grid-template-columns: 50% 50%;
+    gap: 1rem;
 }
 .check-list{
-    --margint-top:.5em;
+    --margint-top:.2em;
+
+}
+.check-list label{
+    padding: .2rem;
+    background-color: lightcoral;
 }
 
 @media (max-width:720px) {
