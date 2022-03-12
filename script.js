@@ -41,18 +41,18 @@ function generarUrl(e) {
     }
     urlOk();
 }
-form.addEventListener('submit', generarUrl);
+// form.addEventListener('submit', generarUrl);
 
 //Función copiar
 function copiarUrl() {
-    inputCopy.select();
+    textAreaUrl.select();
     document.execCommand("copy");
-    btnCopy.textContent = "Copiado!!";
-    setTimeout(() => {
-        btnCopy.textContent = "Copiar";
-    }, 1000)
+    // btnCopy.textContent = "Copiado!!";
+    // setTimeout(() => {
+    //     btnCopy.textContent = "Copiar";
+    // }, 1000)
 }
-btnCopy.addEventListener('click', copiarUrl);
+// btnCopy.addEventListener('click', copiarUrl);
 
 //Generar Pila
 function generarPila(url) {
@@ -61,52 +61,58 @@ function generarPila(url) {
     console.log(indexFormato)
 }
 
+
+
+
+
+
+
+
+
+
 //Validar y limpiar URL
+function preventForm(e) {
+    e.preventDefault();
+}
+
 const formClear = document.getElementById('form-clear-url');
 const inputClear = document.getElementById('input-clear');
 const textAreaUrl = document.getElementById('textarea-url');
+let expresion = /\b\d\d\d\w\d\d\d\b|\b\d\d\d\w\d\d\b/g;
 //Limpiar url
 function limpiarUrl(formato) {
     let urlClearValue = inputClear.value;
     let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
-    // textAreaUrl.value = urlReplace
-    // console.log(urlReplace)
-    let expresion = /\b\d\d\d\w\d\d\d\b/g;
     let nuevaUrl = urlReplace.replace(expresion, formato);
-    textAreaUrl.value += `${nuevaUrl}`
-    console.log(nuevaUrl)
+    textAreaUrl.value += `${nuevaUrl}\n`
+    if (textAreaUrl.value !== '') {
+        //Me sirve el metodo test()
+        //https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
+        console.log(textAreaUrl.value.match(expresion))
+
+    }
 }
-
-
-function preventForm(e) {
-    e.preventDefault();
-
-}
-
-formClear.addEventListener('submit', preventForm);
-
-//For de list Format
-let arrFormat = ['300x250', '300x250'];
-
-
-
 
 //Selecionar List Check
 const listCheck = document.querySelectorAll('.content-check input');
 
 listCheck.forEach((check) => {
     check.addEventListener('change', (e) => {
+        // console.log(e.target.id)
 
-        for (let i = 0; i < arrFormat.length; i++) {
-
-            // console.log(arrFormat)
-        }
-
-        if (e.target.checked === true) {
+        if (e.target.checked) {
             let formatoCheck = e.target.value
             limpiarUrl(formatoCheck)
-            arrFormat.push(e.target.value)
-            // console.log(arrFormat)
+
+        } else if (e.target.checked == false) {
+            let valueTextarea = textAreaUrl.value
+            let expresionInicioFinal = /[httpshtml]/.test(valueTextarea)
+
+            console.log(expresionInicioFinal)
+            textAreaUrl.focus();
+            let range = textAreaUrl.setSelectionRange(0, 10)
+            console.log(range)
+            // copiarUrl()
         } else {
 
         }
@@ -115,3 +121,4 @@ listCheck.forEach((check) => {
     })
 })
 
+formClear.addEventListener('submit', preventForm);
