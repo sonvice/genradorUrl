@@ -9,124 +9,86 @@
 </head>
 <body>
     <div class="box">
-        <!-- <form class="form flow" id="form">
-            <h2>Generar URL Manualmente</h2>
-            <div class="grid">
 
-                <div class="box-fecha">
-                    <label for="" class="label-time">Año</label>
-                    <input type="number" required placeholder="2022" class="anio" id="anio">
-                    <p><small>Carpeta del año</small></p>
-                </div>
-                <div class="box-fecha">
-                    <label for="" class="label-time">Mes</label>
-                    <input type="text" required placeholder="01-enero" class="mes" id="mes">
-                    <p><small>Ver server de como esta nombrada la carpeta del mes</small></p>
-                </div>
-            </div>
-            <div class="box-campania">
-                <label for="">Campaña o Modelo De Coche</label>
-                <input type="text" required placeholder="lion-days-transversal" class="campania" id="campania">
-                <p><small>Nombre de la carpeta dentro de mes</small></p>
-            </div>
-            <div class="box-campania">
-                <label for="">Tamaño del Formato | Nombre de la pieza o carpeta contenedora</label>
-                <div class="box-select">
-
-                    <select id="select">
-                        
-                        <option value="300x250" selected>300x250</option>
-                        <option value="120x600">120x600</option>
-                        <option value="160x600">160x600</option>
-                        <option value="300x600">300x600</option>
-                        <option value="970x250">970x250</option>
-                        <option value="980x250">980x250</option>
-                        <option value="990x250">990x250</option>
-                        <option value="728x90">728x90</option>
-                        <option value="970x90">970x90</option>
-                        <option value="980x90">980x90</option>
-                        <option value="990x90">990x90</option>
-                    </select>
-                    <input type="text" required placeholder="-lion-days-transversal" class="nombre-pieza" id="nombre-pieza">
-                </div>
-                <p><small>Generalmente es el mismo nombre de la campaña, pero se antepone el tamaño de la pieza</small></p>
-            </div>
-            <div class="box-button">
-
-                <button class="btn btn-reset" id="reset">Reset</button>
-                <button class="btn genera-url" id="get-url">Generar URL</button>
-                
-            </div>
-            <div class="box-copy">
-                <input type="text" id="input-copy" value="">
-                <button class="btn btn-copy" id="btn-copy">
-                    Copiar
-                </button>
-            </div>
-        </form> -->
-        <hr>
         <!-- Validar y limpiar url -->
         <form class="form flow" id="form-clear-url">
             <div class="box-copy">
-                <input type="text" required id="input-clear" value="">
+                <input type="text" required id="input-clear" value="" placeholder="https://s3.portal-posventa.com/media-planning/2022/01-enero...">
                 <button class="btn btn-copy" id="btn-clear">
-                    Clear
+                    Enviar
                 </button>
             </div>
-            
+            <p class="error"><small>Ingrese una URL valida.</small></p>
+            <div class="content-active flow">
+
                 <div class="content-check-list">
                     <div class="box-check-vertical check-list flow">
-                        <div class="content-check">
-                            <label><input type="checkbox" id="120x600" value="120x600"> 120x600</label>
+                        <div class="box-title">
+
+                            <h2>Verticales</h2>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="160x600" value="160x600"> 160x600</label>
+                            <label><input type="checkbox"  value="120x600"> 120x600</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="250x250" value="250x250"> 250x250</label>
+                            <label><input type="checkbox"  value="160x600"> 160x600</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="300x250" value="300x250"> 300x250</label>
+                            <label><input type="checkbox"  value="250x250"> 250x250</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="320x480" value="320x480"> 320x480</label>
+                            <label><input type="checkbox"  value="300x250"> 300x250</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="300x600" value="300x600"> 300x600</label>
+                            <label><input type="checkbox"  value="320x480"> 320x480</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox"  value="300x600"> 300x600</label>
                         </div>
                     </div>
                     <div class="box-check-horizontal flow check-list">
-    
-                        <div class="content-check">
-                            <label><input type="checkbox" id="728x90" value="728x90"> 728x90</label>
+                        <div class="box-title">
+
+                            <h2>Horizontales</h2>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="970x250" value="970x250"> 970x250</label>
+                            <label><input type="checkbox" value="728x90"> 728x90</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="980x250" value="980x250"> 980x250</label>
+                            <label><input type="checkbox"  value="970x250"> 970x250</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="990x250" value="990x250"> 990x250</label>
+                            <label><input type="checkbox"  value="980x250"> 980x250</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="970x90" value="970x90"> 970x90</label>
+                            <label><input type="checkbox"  value="990x250"> 990x250</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="980x90" value="980x90"> 980x90</label>
+                            <label><input type="checkbox" value="970x90"> 970x90</label>
                         </div>
                         <div class="content-check">
-                            <label><input type="checkbox" id="990x90" value="990x90"> 990x90</label>
+                            <label><input type="checkbox" value="980x90"> 980x90</label>
+                        </div>
+                        <div class="content-check">
+                            <label><input type="checkbox" value="990x90"> 990x90</label>
                         </div>
                     </div>
                 </div>
-            <div class="box-textarea">
-                <h2>Generar Pila Básica De Formatos</h2>
-                <textarea name="textarea" rows="10" cols="50" id="textarea-url"></textarea>
-                <div class="box-button">
-                    <button class="btn genera-url" id="genrate-url">Generar Pila Básica</button>
-                    <button class="btn copy-pila" id="copy-pila">Copiar Pila</button>
+                <div class="box-textarea">
+                    <div class="box-title">
+                        <h2 class="title">URL GENERADAS</h2><span class="counter">0</span>
+                    </div>
+                    <div class="url-generate">
+
+                        <pre class="pre flow" id="pre"></pre>
+                        <button class="icon-copy"><span>Copiar Contenido</span></button>
+                    </div>
+                    <div class="box-button">
+                        <!-- <button class="btn genera-url" id="genrate-url">Generar Pila Básica</button> -->
+                        <button class="btn ordenar-lista" id="ordenar-lista">Ordenar</button>
+                    </div>
                 </div>
+                <div class="overlay"></div>
             </div>
         </form>
     </div>

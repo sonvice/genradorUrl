@@ -70,55 +70,96 @@ function generarPila(url) {
 
 
 
-//Validar y limpiar URL
-function preventForm(e) {
-    e.preventDefault();
-}
+
 
 const formClear = document.getElementById('form-clear-url');
 const inputClear = document.getElementById('input-clear');
-const textAreaUrl = document.getElementById('textarea-url');
+const pre = document.getElementById('pre');
 let expresion = /\b\d\d\d\w\d\d\d\b|\b\d\d\d\w\d\d\b/g;
-//Limpiar url
-function limpiarUrl(formato) {
-    let urlClearValue = inputClear.value;
-    let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
-    let nuevaUrl = urlReplace.replace(expresion, formato);
-    textAreaUrl.value += `${nuevaUrl}\n`
-    if (textAreaUrl.value !== '') {
-        //Me sirve el metodo test()
-        //https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
-        console.log(textAreaUrl.value.match(expresion))
-
+const overlay = document.querySelector('.overlay');
+let counter = document.querySelector('.counter');
+const msjError = document.querySelector('.error');
+const btnOrderList = document.getElementById('ordenar-lista');
+//let arrForm = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+let arrForm = [];
+//Prevent 
+function preventForm(e) {
+    e.preventDefault();
+    //Validacion de url
+    if (inputClear.value != '' & expresion.test(inputClear.value) == true) {
+        overlay.style.display = 'none';
+        msjError.style.opacity = 0;
+        msjError.style.visibility = 'hidden'
+    } else if (inputClear.value === '' || expresion.test(inputClear.value) == false) {
+        msjError.style.opacity = 1;
+        msjError.style.visibility = 'visible'
+        overlay.style.display = 'block';
     }
 }
 
+//Limpiar url
+function limpiarUrl(formato, numIndex) {
+    let urlClearValue = inputClear.value;
+    let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
+    let nuevaUrl = urlReplace.replace(expresion, formato);
+    // textAreaUrl.value += `${nuevaUrl}\n`
+    let span = document.createElement('span');
+    let aLink = document.createElement('a');
+    span.id = formato;
+    span.appendChild(aLink);
+    aLink.setAttribute('href', nuevaUrl)
+    aLink.setAttribute('target', '_blank')
+    aLink.setAttribute('class', 'url-preview')
+    aLink.textContent = nuevaUrl;
+    pre.appendChild(span);
+    // arrForm.push(formato);
+    // arrForm.sort()
+    // arrForm.splice(numIndex, 1, span);
+    // console.log(arrForm)
+}
+
+
+//Btn Ordenar Lista
+function btnOrder() {
+    btnOrderList.addEventListener('click', () => {
+        pre.innerHTML = '';
+        for (let i = 0; i < arrForm.length; i++) {
+            limpiarUrl(arrForm[i])
+        }
+
+    })
+}
+btnOrder()
+
 //Selecionar List Check
 const listCheck = document.querySelectorAll('.content-check input');
+listCheck.forEach((check, indice) => {
 
-listCheck.forEach((check) => {
     check.addEventListener('change', (e) => {
-        // console.log(e.target.id)
+        //console.log(indice)
 
         if (e.target.checked) {
             let formatoCheck = e.target.value
-            limpiarUrl(formatoCheck)
+            counter.innerHTML++
+            //Check
+            arrForm.push(formatoCheck);
+            arrForm.sort()
+            limpiarUrl(formatoCheck, indice)
 
-        } else if (e.target.checked == false) {
-            let valueTextarea = textAreaUrl.value
-            let expresionInicioFinal = /[httpshtml]/.test(valueTextarea)
-
-            console.log(expresionInicioFinal)
-            textAreaUrl.focus();
-            let range = textAreaUrl.setSelectionRange(0, 10)
-            console.log(range)
-            // copiarUrl()
-        } else {
-
+        } else if (e.target.checked === false) {
+            counter.innerHTML--
+            let removeUrl = document.getElementById(e.target.value).remove();
         }
-
 
     })
 })
+
+//Seleccionar todas las url-preview
+function urlPreview() {
+    const urlsPreview = document.querySelectorAll('.pre span');
+    let arrLink = Array.from(urlsPreview).sort()
+    console.log(arrLink)
+}
+//urlPreview()
 
 formClear.addEventListener('submit', preventForm);
