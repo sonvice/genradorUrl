@@ -80,7 +80,6 @@ const overlay = document.querySelector('.overlay');
 let counter = document.querySelector('.counter');
 const msjError = document.querySelector('.error');
 const btnOrderList = document.getElementById('ordenar-lista');
-//let arrForm = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 let arrForm = [];
 //Prevent 
 function preventForm(e) {
@@ -98,11 +97,10 @@ function preventForm(e) {
 }
 
 //Limpiar url
-function limpiarUrl(formato, numIndex) {
+function limpiarUrl(formato) {
     let urlClearValue = inputClear.value;
     let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
     let nuevaUrl = urlReplace.replace(expresion, formato);
-    // textAreaUrl.value += `${nuevaUrl}\n`
     let span = document.createElement('span');
     let aLink = document.createElement('a');
     span.id = formato;
@@ -112,11 +110,28 @@ function limpiarUrl(formato, numIndex) {
     aLink.setAttribute('class', 'url-preview')
     aLink.textContent = nuevaUrl;
     pre.appendChild(span);
-    // arrForm.push(formato);
-    // arrForm.sort()
-    // arrForm.splice(numIndex, 1, span);
-    // console.log(arrForm)
+
+
+    //console.log(nuevaUrl)
 }
+
+//URL ok
+async function urlOk(url) {
+    const respuesta = await fetch(url);
+    console.log(respuesta.status)
+    try {
+        if (respuesta.status) {
+            console.log('url Ok.')
+        } else {
+            console.log('Respuesta de red OK pero respuesta HTTP no OK');
+        }
+
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
 
 
 //Btn Ordenar Lista
@@ -139,16 +154,23 @@ listCheck.forEach((check, indice) => {
         //console.log(indice)
 
         if (e.target.checked) {
+            //urlOk('https://jsonplaceholder.typicode.com/todos/1');
             let formatoCheck = e.target.value
+            e.target.parentNode.classList.add('active-list');
             counter.innerHTML++
             //Check
             arrForm.push(formatoCheck);
             arrForm.sort()
             limpiarUrl(formatoCheck, indice)
-
         } else if (e.target.checked === false) {
             counter.innerHTML--
-            let removeUrl = document.getElementById(e.target.value).remove();
+            document.getElementById(e.target.value).remove();
+            e.target.parentNode.classList.remove('active-list');
+            //Posición del nuevo array
+            let indexNewArr = arrForm.indexOf(e.target.value);
+            arrForm.splice(indexNewArr, 1)
+
+
         }
 
     })

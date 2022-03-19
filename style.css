@@ -1,5 +1,7 @@
 :root{
     --bg-color-pre: #f0f0f4;
+    --primary:#00a3e0;
+    --secondary:#000;
 }
 
 html{
@@ -26,7 +28,7 @@ input:focus,
 select:focus,
 textarea:focus {
   box-shadow: none;
-  outline: #000 dotted 2px;
+  outline: var(--secondary) dotted 2px;
   outline-offset: .05em;
 }
 button{
@@ -34,12 +36,15 @@ button{
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 button.genera-url:hover{
     background-color: hsl(0deg 0% 10%);
 }
 button.btn-copy:hover{
-    background-color: hsl(120deg 51% 54%);
+    background-color: var(--secondary);
+    
 }
 label{
     display: block;
@@ -53,22 +58,30 @@ input,textarea{
     padding: 1rem 2rem;
     border: 1px solid gray;
     cursor: pointer;
-    background-color: #000;
+    background-color: hsl(0, 0%, 0%);
     color: white;
+}
+.btn-order:hover{
+    background-color:hsl(0, 0%, 10%);
 }
 .box-copy{
     display: flex;
 }
-.btn-copy,.copiar-pila{
-    background-color: rgb(54, 168, 54);
+.btn-copy{
+    background-color: var(--primary);
     margin: 0;
     border: none;
+    transition: background-color .2s ease-out,border-color .2s ease-out;
 }
 .btn-reset{
-    background-color: gray;
+    background-color: hsl(217deg 3% 49%);
+}
+.btn-reset:hover{
+    background-color: hsl(217deg 3% 59%);
 }
 .box-button{
     text-align: center;
+    margin-top: 1rem;
 }
 .box-textarea button{
     display: inline-block;
@@ -112,16 +125,30 @@ p.error{
 }
 .check-list{
     --margint-top:.2em;
+    list-style: none;
 
 }
 .box-title{
     display: flex;
     align-items: center;
     margin-bottom:.5rem;
+    text-transform: uppercase;
 }
 .check-list label{
-    padding: .2rem;
-    background-color: lightcoral;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: .5rem;
+    background-color: var(--primary);
+    cursor: pointer;
+    transition: background-color .2s ease-out,border-color .2s ease-out;
+}
+.check-list label:hover{
+    background-color: var(--secondary);
+    
+}
+.check-list .active-list{
+    background-color: var(--secondary);
 }
 /* Campo Pre */
 .url-generate{
@@ -140,7 +167,7 @@ p.error{
     height: 1.2rem;
 }
 .icon-copy:hover{
-    background-color: black;
+    background-color: var(--secondary);
 }
 .pre{
     --margint-top:.8em;
@@ -149,6 +176,9 @@ p.error{
     background-color: #f0f0f4;
     padding: 1rem 2rem;
     min-height: 60px;
+}
+.pre span{
+    display: inline-block;
 }
 
 .url-preview{
@@ -163,7 +193,7 @@ p.error{
     height: 32px;
     border-radius: 50%;
     padding: 0.5rem;
-    background-color: #0d0d0d;
+    background-color: var(--secondary);
     display: inline-flex;
     justify-content: center;
     align-items: center;
