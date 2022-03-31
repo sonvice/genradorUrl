@@ -1,126 +1,123 @@
-const inputAnio = document.getElementById('anio');
-const inputMes = document.getElementById('mes');
-const inputCampania = document.getElementById('campania');
-const inputNombrePieza = document.getElementById('nombre-pieza');
-const form = document.getElementById('form');
-const btnGenerarUrl = document.getElementById('get-url');
-const inputCopy = document.getElementById('input-copy');
-const btnCopy = document.getElementById('btn-copy');
-const btnGenrarPila = document.getElementById('urls');
-//Formatos
-let arrFormatos = []
 
-//Generar URL
-function generarUrl(e) {
-    e.preventDefault();
-    let valueAnio = inputAnio.value
-    let valueMes = inputMes.value
-    let valueCampania = inputCampania.value
-    let valueNombrePieza = inputNombrePieza.value
-    let select = document.getElementById('select');
-    // function selecFormat() {
-    let indexOption = select.options[select.selectedIndex].value
-    console.log(indexOption)
-    let urlGenerada = `https://media-planning.pre.peugeot.es/${valueAnio}/${valueMes}/${valueCampania}/${indexOption}${valueNombrePieza}/${indexOption}${valueNombrePieza}.html`;
-
-    inputCopy.value = urlGenerada
-
-    async function urlOk(inputCopy) {
-        const respuesta = await fetch(inputCopy);
-        try {
-            if (respuesta.ok) {
-                console.log('url Ok.')
-            } else {
-                console.log('Respuesta de red OK pero respuesta HTTP no OK');
-            }
-
-        }
-        catch (err) {
-
-        }
-    }
-    urlOk();
-}
-// form.addEventListener('submit', generarUrl);
-
-//Función copiar
-function copiarUrl() {
-    textAreaUrl.select();
-    document.execCommand("copy");
-    // btnCopy.textContent = "Copiado!!";
-    // setTimeout(() => {
-    //     btnCopy.textContent = "Copiar";
-    // }, 1000)
-}
-// btnCopy.addEventListener('click', copiarUrl);
-
-//Generar Pila
-function generarPila(url) {
-    console.log(url)
-    let indexFormato = url.split('x');
-    console.log(indexFormato)
-}
-
-
-
-
-
-
-
-
-
-
-
-
+//const btnCopy = document.getElementById('btn-copy');
 const formClear = document.getElementById('form-clear-url');
 const inputClear = document.getElementById('input-clear');
 const pre = document.getElementById('pre');
+const code = document.querySelector('code')
+const containerFormatos = document.getElementById('container');
 let expresion = /\b\d\d\d\w\d\d\d\b|\b\d\d\d\w\d\d\b/g;
 const overlay = document.querySelector('.overlay');
 let counter = document.querySelector('.counter');
 const msjError = document.querySelector('.error');
 const btnOrderList = document.getElementById('ordenar-lista');
-let arrForm = [];
+const btnCopy = document.getElementById('icon-copy');
+const btnClear = document.getElementById('btn-clear');
+const btnReset = document.getElementById('reset');
+let arrForm = ['300x250'];
+//Create Iframe
+const containerIframe = document.getElementById('container');
+//Input Clear
+const clearInput = document.querySelector('.clear');
+
+//Select 300x250 and active check
+let ch = document.querySelector('[value="300x250"]');
+
+
 //Prevent 
 function preventForm(e) {
     e.preventDefault();
     //Validacion de url
     if (inputClear.value != '' & expresion.test(inputClear.value) == true) {
+
+        urlClearValue.splice(0, 1)
+        urlClearValue.push(inputClear.value)
         overlay.style.display = 'none';
         msjError.style.opacity = 0;
         msjError.style.visibility = 'hidden'
+        inputClear.style.border = '2px solid green';
+        //Llamad a la función checked
+
+        activeCheckedBasicFormat(urlClearValue)
     } else if (inputClear.value === '' || expresion.test(inputClear.value) == false) {
         msjError.style.opacity = 1;
         msjError.style.visibility = 'visible'
         overlay.style.display = 'block';
+        inputClear.style.border = '2px solid red';
     }
 }
 
+//Value Input
+let urlClearValue = [];
+if (urlClearValue != '') {
+    console.log(urlClearValue, 'valor')
+}
+
+
+
+//Funcion active 300x250
+function activeCheckedBasicFormat(urlClearValue) {
+    let urlReplace = urlClearValue[0].replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
+    let nuevaUrl = urlReplace.replace(expresion, '300x250');
+    const canvas = document.getElementById('canvas').src = nuevaUrl
+    ch.checked = true;
+    ch.parentElement.setAttribute('class', 'active-list');
+
+}
+
+//Set Atributos
+function setArrt(target, atributos) {
+    for (const key in atributos) {
+        target.setAttribute(key, atributos[key])
+    }
+}
+
+
+
+
+let text;
 //Limpiar url
+
+// console.log(urlClearValue)
 function limpiarUrl(formato) {
-    let urlClearValue = inputClear.value;
-    let urlReplace = urlClearValue.replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
+    let urlReplace = urlClearValue[0].replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
     let nuevaUrl = urlReplace.replace(expresion, formato);
     let span = document.createElement('span');
     let aLink = document.createElement('a');
     span.id = formato;
+    setArrt(aLink, { href: nuevaUrl, target: '_blank', class: 'url-preview' })
     span.appendChild(aLink);
-    aLink.setAttribute('href', nuevaUrl)
-    aLink.setAttribute('target', '_blank')
-    aLink.setAttribute('class', 'url-preview')
     aLink.textContent = nuevaUrl;
-    pre.appendChild(span);
+    code.appendChild(span);
+    text = document.querySelectorAll('pre span')
 
-
-    //console.log(nuevaUrl)
+    //urlOk(nuevaUrl)
 }
+
+//Copiar Contenido
+function copiarContenido() {
+    let links = Array.from(text);
+    let texto = '';
+    for (let i = 0; i < links.length; i++) {
+        let element = links[i].textContent;
+        texto += `${element}\n`
+    }
+
+    navigator.clipboard.writeText(texto).then(function () {
+    }, function () {
+        console.log('Falla copia')
+    });
+
+}
+
+
+
 
 //URL ok
 async function urlOk(url) {
     const respuesta = await fetch(url);
     console.log(respuesta.status)
     try {
-        if (respuesta.status) {
+        if (respuesta.status == 200) {
             console.log('url Ok.')
         } else {
             console.log('Respuesta de red OK pero respuesta HTTP no OK');
@@ -136,45 +133,64 @@ async function urlOk(url) {
 
 //Btn Ordenar Lista
 function btnOrder() {
+    // arrForm.push('300x250');
+    ch.checked = true;
     btnOrderList.addEventListener('click', () => {
-        pre.innerHTML = '';
+        code.innerHTML = '';
         for (let i = 0; i < arrForm.length; i++) {
             limpiarUrl(arrForm[i])
+
+            counter.innerHTML = arrForm.length
+            console.log(arrForm[i])
         }
+
 
     })
 }
 btnOrder()
 
+
+// activeBasicFormat()
+
 //Selecionar List Check
 const listCheck = document.querySelectorAll('.content-check input');
+ch.disabled = true;
 listCheck.forEach((check, indice) => {
 
     check.addEventListener('change', (e) => {
         //console.log(indice)
-
         if (e.target.checked) {
-            //urlOk('https://jsonplaceholder.typicode.com/todos/1');
+
             let formatoCheck = e.target.value
             e.target.parentNode.classList.add('active-list');
             counter.innerHTML++
             //Check
             arrForm.push(formatoCheck);
             arrForm.sort()
-            limpiarUrl(formatoCheck, indice)
+
+            //Width and Height canvas
+
+            limpiarUrl(formatoCheck)
+
         } else if (e.target.checked === false) {
+
             counter.innerHTML--
-            document.getElementById(e.target.value).remove();
+            let remove = document.getElementById(e.target.value).remove();
+
             e.target.parentNode.classList.remove('active-list');
             //Posición del nuevo array
             let indexNewArr = arrForm.indexOf(e.target.value);
             arrForm.splice(indexNewArr, 1)
 
-
         }
 
     })
 })
+
+//Btn Refresh
+function btnRefresh() {
+    location.reload()
+}
 
 //Seleccionar todas las url-preview
 function urlPreview() {
@@ -182,6 +198,26 @@ function urlPreview() {
     let arrLink = Array.from(urlsPreview).sort()
     console.log(arrLink)
 }
-//urlPreview()
+
+function limpiarInput() {
+    inputClear.value = '';
+}
+
+function actionSendBtn() {
+    setTimeout(() => { btnClear.textContent = 'Enviar Url' }, 1000)
+    btnClear.textContent = 'Url Enviada';
+}
+
+btnReset.addEventListener('click', btnRefresh)
+
+
+//Event Listener
+btnClear.addEventListener('click', actionSendBtn)
+
+clearInput.addEventListener('click', limpiarInput)
+
+btnCopy.addEventListener('click', copiarContenido);
 
 formClear.addEventListener('submit', preventForm);
+
+//children[0].children[0].width
