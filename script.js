@@ -14,6 +14,7 @@ const btnCopy = document.getElementById('icon-copy');
 const btnClear = document.getElementById('btn-clear');
 const btnReset = document.getElementById('reset');
 let arrForm = ['300x250'];
+const btnboxCopy = document.querySelector('.boxbtn-copy');
 //Create Iframe
 const containerIframe = document.getElementById('container');
 //Input Clear
@@ -23,12 +24,18 @@ const clearInput = document.querySelector('.clear');
 let ch = document.querySelector('[value="300x250"]');
 
 
-//Prevent 
+//Función para comprobar si la url es valida y añadir estilos según sea el caso
+let contador = 0;
 function preventForm(e) {
     e.preventDefault();
     //Validacion de url
-    if (inputClear.value != '' & expresion.test(inputClear.value) == true) {
+    if (inputClear.value !== '' & expresion.test(inputClear.value) == true) {
 
+
+        setTimeout(() => { btnClear.textContent = 'Enviar Url' }, 1000)
+        btnClear.textContent = 'Url Enviada';
+
+        contador += 1;
         urlClearValue.splice(0, 1)
         urlClearValue.push(inputClear.value)
         overlay.style.display = 'none';
@@ -36,9 +43,13 @@ function preventForm(e) {
         msjError.style.visibility = 'hidden'
         inputClear.style.border = '2px solid green';
         //Llamad a la función checked
-
+        console.log(contador)
+        if (contador === 1) {
+            counter.innerHTML = 1;
+            limpiarUrl('300x250');
+        }
         activeCheckedBasicFormat(urlClearValue)
-    } else if (inputClear.value === '' || expresion.test(inputClear.value) == false) {
+    } else if (inputClear.value === '' || expresion.test(inputClear.value) === false) {
         msjError.style.opacity = 1;
         msjError.style.visibility = 'visible'
         overlay.style.display = 'block';
@@ -46,22 +57,18 @@ function preventForm(e) {
     }
 }
 
-//Value Input
+//Recoge el valor del input que contiene la url
 let urlClearValue = [];
-if (urlClearValue != '') {
-    console.log(urlClearValue, 'valor')
-}
 
 
 
-//Funcion active 300x250
+//Funcion para activar el formato 300x250
 function activeCheckedBasicFormat(urlClearValue) {
     let urlReplace = urlClearValue[0].replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
     let nuevaUrl = urlReplace.replace(expresion, '300x250');
     const canvas = document.getElementById('canvas').src = nuevaUrl
     ch.checked = true;
-    ch.parentElement.setAttribute('class', 'active-list');
-
+    ch.parentElement.classList.add('active-list');
 }
 
 //Set Atributos
@@ -76,14 +83,13 @@ function setArrt(target, atributos) {
 
 let text;
 //Limpiar url
-
-// console.log(urlClearValue)
 function limpiarUrl(formato) {
     let urlReplace = urlClearValue[0].replace('s3.portal-posventa.com/media-planning', 'media-planning.pre.peugeot.es');
     let nuevaUrl = urlReplace.replace(expresion, formato);
     let span = document.createElement('span');
     let aLink = document.createElement('a');
-    span.id = formato;
+    //span.id = formato;
+    setArrt(span, { 'data-id': formato })
     setArrt(aLink, { href: nuevaUrl, target: '_blank', class: 'url-preview' })
     span.appendChild(aLink);
     aLink.textContent = nuevaUrl;
@@ -93,7 +99,8 @@ function limpiarUrl(formato) {
     //urlOk(nuevaUrl)
 }
 
-//Copiar Contenido
+//Función para copiar las url
+let tooltip = document.getElementById('tooltip')
 function copiarContenido() {
     let links = Array.from(text);
     let texto = '';
@@ -107,12 +114,17 @@ function copiarContenido() {
         console.log('Falla copia')
     });
 
+    tooltip.textContent = 'Copiado!!'
+}
+
+//Función que al salir el cursor del elemento inserta un texto
+function textTooltip() {
+    tooltip.textContent = 'Copiar';
 }
 
 
 
-
-//URL ok
+//Verifica en el server si el formato y su url existen
 async function urlOk(url) {
     const respuesta = await fetch(url);
     console.log(respuesta.status)
@@ -131,29 +143,25 @@ async function urlOk(url) {
 
 
 
-//Btn Ordenar Lista
+//Funcion para ordenar la lista de links de menor a mayor
 function btnOrder() {
-    // arrForm.push('300x250');
     ch.checked = true;
     btnOrderList.addEventListener('click', () => {
         code.innerHTML = '';
         for (let i = 0; i < arrForm.length; i++) {
             limpiarUrl(arrForm[i])
-
             counter.innerHTML = arrForm.length
-            console.log(arrForm[i])
         }
-
 
     })
 }
 btnOrder()
 
 
-// activeBasicFormat()
 
-//Selecionar List Check
+//Selecionar lista de ckeckbox
 const listCheck = document.querySelectorAll('.content-check input');
+const contentCheck = document.querySelector('.content-check')
 ch.disabled = true;
 listCheck.forEach((check, indice) => {
 
@@ -175,7 +183,13 @@ listCheck.forEach((check, indice) => {
         } else if (e.target.checked === false) {
 
             counter.innerHTML--
-            let remove = document.getElementById(e.target.value).remove();
+            //Remueve el link preview
+            let remove = document.querySelectorAll('code span')
+            remove.forEach((el) => {
+                if (e.target.value === el.dataset.id) {
+                    el.remove()
+                }
+            })
 
             e.target.parentNode.classList.remove('active-list');
             //Posición del nuevo array
@@ -192,27 +206,19 @@ function btnRefresh() {
     location.reload()
 }
 
-//Seleccionar todas las url-preview
-function urlPreview() {
-    const urlsPreview = document.querySelectorAll('.pre span');
-    let arrLink = Array.from(urlsPreview).sort()
-    console.log(arrLink)
-}
 
 function limpiarInput() {
     inputClear.value = '';
 }
 
-function actionSendBtn() {
-    setTimeout(() => { btnClear.textContent = 'Enviar Url' }, 1000)
-    btnClear.textContent = 'Url Enviada';
-}
 
-btnReset.addEventListener('click', btnRefresh)
+
 
 
 //Event Listener
-btnClear.addEventListener('click', actionSendBtn)
+btnReset.addEventListener('click', btnRefresh)
+
+
 
 clearInput.addEventListener('click', limpiarInput)
 
@@ -220,4 +226,4 @@ btnCopy.addEventListener('click', copiarContenido);
 
 formClear.addEventListener('submit', preventForm);
 
-//children[0].children[0].width
+btnboxCopy.addEventListener('mouseout', textTooltip)

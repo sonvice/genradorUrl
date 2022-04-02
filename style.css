@@ -3,9 +3,17 @@
     --primary:#00a3e0;
     --secondary:#000;
 
+    --rojo:hsl(0, 100%, 50%);
+
     --gris-light:hsl(240, 15%, 95%);
     --gris-oscuro: hsl(0 0% 80%);
     --gris-hover: hsl(0, 0%, 70%);
+
+    --shadow-color: 0deg 0% 80%;
+    --shadow-elevation-medium:
+    0px 0.3px 0.4px hsl(var( --shadow-color) / 0.17),
+    0px 1.7px 2.2px -0.6px hsl(var( --shadow-color) / 0.28),
+    0.1px 5.5px 7.2px -1.2px hsl(var( --shadow-color) / 0.39);
 }
 
 html{
@@ -41,8 +49,8 @@ input:focus,
 select:focus,
 textarea:focus {
   box-shadow: none;
-  outline: var(--secondary) dotted 2px;
-  outline-offset: .05em;
+  outline: dashed 2px lightgrey;
+  outline-offset: 4px;
 }
 button{
     all: unset;
@@ -64,7 +72,6 @@ label{
 }
 input,textarea{
     padding:1rem .5rem;
-    border: 1px solid gray;
     width: 100%;
     height: 100%;
 }
@@ -75,6 +82,16 @@ h1{
     text-align: center;
     text-transform: uppercase;
     font-weight: 600;
+}
+.form{
+    padding: 1rem;
+}
+.content-input-value{
+    border: 2px solid var(--primary);
+}
+.content-input-value input{
+    padding: 1rem 3.5rem 1rem 1rem;
+    border: 1px solid transparent;
 }
 .container{
     max-width: 68rem;
@@ -184,9 +201,15 @@ p.error{
     
 }
 
+.content-check input:focus+label{
+    outline: dashed 2px lightgrey;
+    outline-offset: 4px;
+}
+.content-check input:focus:not(:focus-visible){
+    outline: none;
+}
 
-
-.active-list input:checked+span::before{
+.active-list input:checked+label span::before{
     content: '';
     position: absolute;
     left: 0;
@@ -211,9 +234,9 @@ p.error{
     --margint-top:.2em;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(8.75rem,1fr));
+    grid-template-columns: repeat(auto-fill,minmax(9.75rem,1fr));
     grid-auto-rows: 56px;
-    gap: 0.5rem;
+    gap: 1rem;
 
 }
 .box-title{
@@ -229,37 +252,75 @@ p.error{
     font-size: 1.25rem;
     font-weight: 600;
     padding: 1rem;
-    background-color: var(--primary);
     cursor: pointer;
-    transition: background-color .2s ease-out,border-color .2s ease-out;
+    transition: background-color .2s ease-out;
     height: 100%;
 }
 .check-list label:hover{
     background-color: var(--secondary);
     
 }
-.check-list .active-list{
+.colum-list .content-check.active-list{
     background-color: var(--secondary);
 }
+
+.content-check{
+    background-color: var(--primary);
+}
+
 /* Campo Pre */
 .url-generate{
     position: relative;
+}
+.boxbtn-copy{
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.boxbtn-copy:hover .tooltip{
+    visibility: visible;
+    opacity: 1;
 }
 .icon-copy{
     -webkit-mask-image: url(images/copy.svg);
     -webkit-mask-size: cover;
     background-color: rgb(59, 59, 59);
     cursor: pointer;
-    padding: .5rem;
-    position: absolute;
-    right: .5rem;
-    top: .5rem;
-    width: 1rem;
-    height: 1rem;
+    width: 100%;
+    height: 100%;
 }
 .icon-copy:hover{
     background-color: var(--secondary);
 }
+/* Toltip */
+.tooltip{
+    display: inline-block;
+    position: absolute;
+    top: -230%;
+    right: -30%;
+    background-color: var(--gris-oscuro);
+    padding: .5rem;
+    border-radius: 4px;
+    box-shadow: var(--shadow-elevation-medium);
+    visibility: hidden;
+    opacity: 0;
+    transition: .2s ease-out ;
+    color: #fff;
+}
+.tooltip::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: var(--gris-oscuro) transparent transparent transparent;
+    box-shadow: var(--shadow-elevation-medium);
+}
+
 .pre{
     --margint-top:.8em;
     white-space: pre-wrap;
@@ -284,6 +345,10 @@ p.error{
 
 .url-preview{
     display: inline-block;
+
+}
+.url-preview:hover{
+    text-decoration: none;
 }
 .content-active{
     --margint-top:3rem;
@@ -314,6 +379,43 @@ p.error{
     bottom: 0;
     margin: 0;
 }
+.canvas-box{
+    padding: 1rem;
+}
+
+.preview-200{
+    text-underline-position: under;
+    text-decoration-color: var(--primary);
+    color: var(--primary);
+}
+.preview-404{
+    text-underline-position: under;
+    text-decoration-color: var(--rojo);
+    color: var(--rojo);
+}
+.preview-200::before{
+    content: '✔';
+    border: 1px solid;
+    padding: 0.2rem;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 1.2;
+    margin-right: 0.5rem;
+    text-align: center;
+}
+
+.preview-404::before{
+    content: '❌';
+    border: 1px solid;
+    padding: 0.2rem;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 1.2;
+    margin-right: 0.5rem;
+}
+
 
 @media (max-width:720px) {
     .content-check-list{
@@ -331,7 +433,10 @@ p.error{
     .box-copy,.box-button{
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        
+    }
+    .box-button{
+        gap: 1rem;
     }
 }
 @media (max-width:720px) {
